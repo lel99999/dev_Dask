@@ -1,4 +1,4 @@
-- hosts: flaskRH7
+- hosts: daskRH7
   vars:
     custom_repo: true
     java_link: https://drive.google.com/open?id=1bSq7I3MY3SvY4MHfowEyNq3l-sFMJa8B
@@ -17,7 +17,16 @@
       yum:
         name: libselinux-python
         state: present
-
+    - name: download epel
+      shell:  wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel-release-latest-7.noarch.rpm
+    - name: Install epel
+      shell:  yum -y localinstall /tmp/epel*rpm
+    - name: Install python-pip
+      yum:
+        name: python-pip
+        state: latest
+    - name: install dask
+      shell: pip install "dask[complete]"
 # post_tasks:
 #   - name: Install texlive
 #     yum:
